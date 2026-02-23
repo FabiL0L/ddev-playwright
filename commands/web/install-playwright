@@ -8,6 +8,9 @@ set -e
 
 echo "Installing Playwright browsers and dependencies..."
 
+# Use PLAYWRIGHT_VERSION environment variable, default to "latest"
+VERSION="${PLAYWRIGHT_VERSION:-latest}"
+
 # Check if browsers are already installed
 if [ -f /opt/playwright-browsers/.installed ]; then
     echo "✓ Playwright browsers are already installed at /opt/playwright-browsers"
@@ -47,16 +50,17 @@ else
             source ~/.nvm/nvm.sh
             nvm use 22 2>/dev/null || true
         fi
-        echo 'n' | npm init playwright@latest -- --quiet --lang=TypeScript --no-browsers || {
+
+        echo 'n' | npm init playwright@${VERSION} -- --quiet --lang=TypeScript --no-browsers || {
           echo 'Playwright init failed, trying alternative approach...'
           npm init -y
-          npm install @playwright/test@latest
+          npm install @playwright/test@${VERSION}
           npx playwright init --yes --lang=TypeScript --no-browsers
         }
     else
         # Install Playwright dependencies
         echo "Installing Playwright dependencies..."
-        npm install @playwright/test@latest
+        npm install @playwright/test@${VERSION}
     fi
 
     # Install browsers to the persistent location
@@ -91,7 +95,7 @@ if [ -f package.json ]; then
         npx playwright install --list
     else
         echo "⚠️  Playwright not installed in project. Installing dependencies..."
-        npm install @playwright/test@latest
+        npm install @playwright/test@${VERSION}
         npx playwright --version
         echo ""
         echo "Installed browsers:"
