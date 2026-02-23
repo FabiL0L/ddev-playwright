@@ -46,7 +46,7 @@ teardown() {
 
 @test "install from directory" {
   set -eu -o pipefail
-  cd ${TESTDIR}
+  cd "${TESTDIR}"
 
   echo "# Basic site check" >&3
   health_checks
