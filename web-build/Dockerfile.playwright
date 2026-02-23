@@ -76,7 +76,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     node --version && npm --version
     # Pre-install Playwright and download browsers
     # Using latest version for most up-to-date features
-RUN npm install -g playwright@${VERSION} && \
+RUN npm install -g playwright@${PLAYWRIGHT_VERSION} && \
     npx playwright install-deps && \
     npx playwright install && \
     # Clean up npm cache to reduce image size
