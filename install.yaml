@@ -92,10 +92,10 @@ post_install_actions:
 
       # Initialize Playwright project non-interactively
       # This creates package.json, playwright.config.ts, and example tests
-      echo 'n' | npm init playwright@${VERSION} -- --quiet --lang=TypeScript --no-browsers || {
+      echo 'n' | npm init playwright@${PLAYWRIGHT_VERSION:-latest} -- --quiet --lang=TypeScript --no-browsers || {
         echo 'Playwright init failed, trying alternative approach...'
         npm init -y
-        npm install @playwright/test@${VERSION}
+        npm install @playwright/test@${PLAYWRIGHT_VERSION:-latest}
         npx playwright init --yes --lang=TypeScript --no-browsers
       }
 
